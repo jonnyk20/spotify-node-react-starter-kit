@@ -1,0 +1,15 @@
+{
+  "name": "discovery",
+  "version": "1.0.0",
+  "description": "",
+  "main": "discover.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node discover.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "spotify-web-api-node": "^4.0.0"
+  }
+}

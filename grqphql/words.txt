@@ -1,0 +1,13 @@
+factory method pattern
+facade pattern
+common pattern
+inheritance
+reflection / introspection
+composition
+inheritance
+abstraction
+encapsulation
+polymorphism +
+dependency injection+ 
+abstract class/method
+merge sort

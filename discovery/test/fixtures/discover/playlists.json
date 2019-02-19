@@ -1,0 +1,18 @@
+{
+    "body":{
+        "items": [
+            {
+                "name": "Discover Weekly",
+                "id": "1"
+            },
+            {
+                "name": "Dropping Harder",
+                "id": "3"
+            },
+            {
+                "name": "Discover Bank",
+                "id": "8"
+            }
+        ]
+    }
+}

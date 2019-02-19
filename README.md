@@ -1,9 +1,19 @@
-# spotify-api-intro
-This Repo is the result of a tutorial that teaches how to use Spotify's API with react.
-It's a siple app that allos users to see what song they currently have playing on Spotify.
-There are two parts to it, the auth-server, and the client. 
+# spotify-ops
+This Repo was spun off of spotify-node-react-starter-kit to be a toolbelt using Spotify's APIs.
 
-## Getting Statrted
+## Component Overview
+### auth-server
+The auth server for handling the oauth flow with spotify
+### client
+The web portal. For today, this just handles Oauth
+### discovery
+A function meant to be hosted on lambda for saving discover weekly playlist once a week
+### graphql
+Graphql server that exposes data to the frontend
+### ops
+REST services. Currently just saves top info from spotify to local mongo
+
+## Getting Started
 
 ### 1) Create an App
 - Visit https://developer.spotify.com/ 
@@ -28,6 +38,4 @@ There are two parts to it, the auth-server, and the client.
 - Make sure you have a song playing (or paused) on a Spotify app
 - Visit http://localhost:3000
 - Click 'Log in with Spotify' and log in
-- Click the 'Check Now Playing' Button
-- Your currently playing song's name and album art should appear
-
+- Copy the refresh token (in the url)
