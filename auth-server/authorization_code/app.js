@@ -16,6 +16,7 @@ var client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
 var client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Or Your redirect uri
 
+console.info("CLIENT!!!", client_id, client_secret);
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -40,6 +41,17 @@ app.use(express.static(__dirname + '/public'))
 
 app.get('/login', function(req, res) {
 
+  if(!req.query.name || !req.query.code){
+    console.error("Missing fields:", req.query);
+    throw new Error("Required query params not submitted to /login")
+  }
+  //ABE!!! this is the name and access code passed from the client
+  const userName = req.query.name;
+  const userCode = req.query.code;
+  //TODO: check the codes db for this code
+
+
+  //https://developer.spotify.com/documentation/general/guides/authorization-guide/
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
@@ -51,18 +63,20 @@ app.get('/login', function(req, res) {
       client_id: client_id,
       scope: scope,
       redirect_uri: redirect_uri,
-      state: state
+      state: state+"_user_"+userName,
+      userName: userName
     }));
 });
 
 app.get('/callback', function(req, res) {
 
-  // your application requests refresh and access tokens
-  // after checking the state parameter
+  // See line 66 above. Passing along state...
+  let parsedState = req.query.state.split(/_user_/g);
 
-  var code = req.query.code || null;
-  var state = req.query.state || null;
-  var storedState = req.cookies ? req.cookies[stateKey] : null;
+  let code = req.query.code || null;
+  let state = parsedState[0] || null;
+  let userName = parsedState[1] || null;
+  let storedState = req.cookies ? req.cookies[stateKey] : null;
 
   if (state === null || state !== storedState) {
     res.redirect('/#' +
