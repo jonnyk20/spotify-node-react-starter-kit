@@ -4,6 +4,7 @@ const mongo= require('mongoose');
 const TopModel = require('./models/tops');
 const test = require('./test_stuff');
 const logger = require('koa-logger')
+const genres = require("./resolvers/genres")
 
 test();
 
@@ -33,7 +34,7 @@ const typeDefs = gql`
     }
     type Query {
         getTops(time_range: String, user: String): [Top]
-        doStuff: String
+        getGenres: [String]
     }
 `;
 
@@ -42,6 +43,9 @@ const resolvers = {
         async getTops(parent, args, context, info){
             console.info("Getting tops for", args.user, args.time_range);
             return TopModel.find({user:args.user, time_range:args.time_range}).exec();
+        },
+        getGenres(){
+            return genres;
         }
     },
     Top: {
