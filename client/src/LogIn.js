@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from "@reach/router"
-
-class SignUp extends Component {
+class LogIn extends Component {
   constructor(){
     super();
 
     this.state = {
-      username: "",
-      usercode: ""
+      username: ""
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -17,29 +15,24 @@ class SignUp extends Component {
   }
   handleSubmit(event) {
     console.info('A value was submitted: ',this.state);
-    document.location.href = `http://localhost:8888/login?name=${this.state.username}&code=${this.state.usercode}`
     event.preventDefault();
   }
   render() {
     return (
       <div>
-        <h3>Sign up!</h3>
-        <p>If you've never used Spotify Ops, go ahead and sign up...</p>
+        <h3>Log in</h3>
+        <p>If you've used Spotify Ops before, log in</p>
         <form onSubmit={this.handleSubmit}>
           <label>
             Email:
             <input type="email" name="username" value={this.state.username} onChange={this.handleChange} />
           </label>
-          <label>
-            Code:
-            <input type="text" name="usercode" value={this.state.usercode} onChange={this.handleChange} />
-          </label>
           <input type="submit" value="Submit" />
         </form>
-        <p>Already joined? <Link to="/login">Log In</Link></p>
+        <p>New to spotify Ops? <Link to="/signup">Sign Up!</Link></p>
       </div>
     )
   }
 }
 
-export default SignUp;
+export default LogIn;

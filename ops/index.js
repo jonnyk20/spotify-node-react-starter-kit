@@ -2,7 +2,7 @@
 let cron = require('node-cron')
 let Koa = require('koa')
 let kRouter = require('koa-router')
-let auth = require('./src/auth')
+let Spotify = require('./src/spotify')
 let db = require('./src/db')
 let saveTop= require('./src/top')
 let TokenModel = require('./src/models/token')
@@ -29,10 +29,21 @@ router.post('/top/save', async (ctx, next) => {
     ctx.status = 201;
     next();
 });
+
+router.get('/authentication', async (ctx, next)=> {
+    console.info("**** CALLED AUTHENTICATION ****");
+
+    // Check the email provided to see if we have it
+    // For now, we have nothing
+    ctx.status = 404;
+    next();
+})
+
+
+// TODO
 // rounter.post('/recommendations', async (ctx, next)=>{
 //     console.info("**** CALLED RECOMMENDATIONS ****");
 //     // extract seeds, make call to spotify
-    
 // })
 
 app.use(async (ctx, next) => {
@@ -42,10 +53,10 @@ app.use(async (ctx, next) => {
             if(user){
                 let query = TokenModel.findOne({name: user});
                 let token = await query.exec();
-                console.info("initiating auth for token", token.token);
-                ctx.state.spotify = await auth(token.token);
+                console.info("initiating Spotify for token", token.token);
+                ctx.state.spotify = await Spotify(token.token);
                 ctx.state.user = token.name
-                console.info("Auth complete!");
+                console.info("Spotify complete!");
             } else {
                 console.info("No user specified")
             }

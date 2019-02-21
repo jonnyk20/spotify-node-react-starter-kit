@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import Portal from "./Portal.js"
+import Dashboard from "./Dashboard.js"
 import SignUp from "./SignUp.js"
+import LogIn from "./LogIn.js"
+import Home from "./Home.js"
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-boost";
-import gql from "graphql-tag";
 import './App.css';
+import { Router } from "@reach/router"
+
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql"
 });
@@ -19,9 +22,13 @@ class App extends Component {
     return (
       <ApolloProvider client={client}>
         <div className="App">
-            <SignUp />
-            <Portal />
-          </div>
+          <Router>
+            <SignUp path="signup"/>
+            <LogIn path="login"/>
+            <Dashboard path="dashboard"/>
+            <Home path="/" />
+          </Router>
+        </div>
       </ApolloProvider>
     );
   }
