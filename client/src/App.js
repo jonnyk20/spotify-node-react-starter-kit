@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Portal from "./Portal.js"
+import SignUp from "./SignUp.js"
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-boost";
 import gql from "graphql-tag";
@@ -17,8 +18,8 @@ class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
-      <div className="App">
-            <a href='http://localhost:8888' > Login to Spotify!! </a>
+        <div className="App">
+            <SignUp />
             <Portal />
           </div>
       </ApolloProvider>
