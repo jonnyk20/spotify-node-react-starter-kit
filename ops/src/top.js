@@ -13,7 +13,7 @@ module.exports = async function saveTop(spotify, name){
         let trackPromises = terms.map(term => spotify.getMyTopTracks({time_range: term, ...options}))
 
         let [shortArt, longArt, mediumArt, shortTrack, longTrack, mediumTrack] = await Promise.all([...artistPromises, ...trackPromises]);
-        console.info("Creating now");
+        console.info("Creating top now");
         // Save to top
         return await TopModel.create([
             {
