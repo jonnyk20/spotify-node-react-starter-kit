@@ -9,6 +9,7 @@ const spotifyApi = new SpotifyWebApi(credentials);
 
 
 module.exports = async function setAuth(refresh){
+    console.info("SETTING IT UP DAWG!", credentials, refresh);
     spotifyApi.setRefreshToken(refresh);
     try{
         let response = await spotifyApi.refreshAccessToken();

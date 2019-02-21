@@ -5,6 +5,8 @@ const TopModel = require('./models/tops');
 const test = require('./test_stuff');
 const logger = require('koa-logger')
 const genres = require("./resolvers/genres")
+const tops = require('./resolvers/tops');
+
 
 test();
 
@@ -19,13 +21,15 @@ const typeDefs = gql`
     type Artist {
         name: String
         genres: [String]
+        id: String
     }
     type Track {
         name: String
         album: Album
         artists: [Artist]
+        id: String
     }
-    type Top {
+    type ArchivedTop {
         user: String
         time_range: String
         createdAt: String
@@ -33,27 +37,29 @@ const typeDefs = gql`
         tracks: [Track]
     }
     type Query {
-        getTops(time_range: String, user: String): [Top]
+        getArchivedTops(time_range: String, user: String): [ArchivedTop]
+        getTopArtists(time_range: String, user: String): [Artist]
+        getTopTracks(time_range: String, user: String): [Track]
         getGenres: [String]
     }
 `;
 
 const resolvers = {
     Query: {
-        async getTops(parent, args, context, info){
+        async getArchivedTops(parent, args, context, info){
             console.info("Getting tops for", args.user, args.time_range);
             return TopModel.find({user:args.user, time_range:args.time_range}).exec();
         },
+        async getTopArtists(parent, args, context, info){
+            args.type = "artists";
+            return await tops(parent, args, context, info)
+        },
+        async getTopTracks(parent, args, context, info){
+            args.type = "tracks";
+            return await tops(parent, args, context, info)
+        },
         getGenres(){
             return genres;
-        }
-    },
-    Top: {
-        artists(top) {
-            return top.artists;
-        },
-        tracks(top) {
-            return top.tracks;
         }
     }
 };

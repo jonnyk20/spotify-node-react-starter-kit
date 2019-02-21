@@ -4,7 +4,7 @@ let Koa = require('koa')
 let kRouter = require('koa-router')
 let Spotify = require('./src/spotify')
 let db = require('./src/db')
-let saveTop= require('./src/top')
+let {saveTop, getTop}= require('./src/top');
 let TokenModel = require('./src/models/token')
 let cors = require('@koa/cors');
 
@@ -26,6 +26,12 @@ router.post('/top/save', async (ctx, next) => {
     console.info("**** CALLED SAVE TOP ****", JSON.stringify(ctx.state));
     await saveTop(ctx.state.spotify, ctx.state.user);
     console.info("*** SAVE TOP COMPLETED");
+    ctx.status = 201;
+    next();
+});
+router.get('/top', async (ctx, next) => {
+    console.info("**** CALLED GET TOP ****", JSON.stringify(ctx.query));
+    ctx.body = await getTop(ctx.state.spotify, ctx.query.time_range, ctx.query.type, ctx);
     ctx.status = 201;
     next();
 });
@@ -56,7 +62,7 @@ app.use(async (ctx, next) => {
                 console.info("initiating Spotify for token", token.token);
                 ctx.state.spotify = await Spotify(token.token);
                 ctx.state.user = token.name
-                console.info("Spotify complete!");
+                console.info("Spotify complete!", token.name);
             } else {
                 console.info("No user specified")
             }

@@ -1,13 +1,26 @@
 let mongo =require('mongoose')
 let TopModel =require('./models/tops')
 mongo.connect('mongodb://localhost:27017/spotify', {useNewUrlParser: true});
+const options = {
+    limit: 25
+};
+async function getTop(spotify, term, type, ctx){
+    if(!term || !type){
+        ctx.throw(400,"Must specify term and type");
+    }
+    let tops;
+    if(type === "artists"){
+        tops = await spotify.getMyTopArtists({time_range: term, ...options})
+    } else if (type === "tracks"){
+        tops = await spotify.getMyTopTracks({time_range: term, ...options})
+    } else {
+        ctx.throw(400,"Unsupported type specified " + type);
+    }
+    return tops;
 
-module.exports = async function saveTop(spotify, name){
+}
+async function saveTop(spotify, name){
     try{
-
-        let options = {
-            limit: 5
-        };
         let terms = ["short_term", "long_term", "medium_term"];
         let artistPromises = terms.map(term => spotify.getMyTopArtists({time_range: term, ...options}));
         let trackPromises = terms.map(term => spotify.getMyTopTracks({time_range: term, ...options}))
@@ -39,5 +52,9 @@ module.exports = async function saveTop(spotify, name){
     } catch(err){
         console.error("Error getting Top", JSON.stringify(err));
     }
+}
+module.exports = {
+    saveTop: saveTop,
+    getTop: getTop
 }
 

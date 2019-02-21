@@ -15,6 +15,9 @@ class LogIn extends Component {
   }
   handleSubmit(event) {
     console.info('A value was submitted: ',this.state);
+    //tbd...
+    // document.location.href = `http://localhost:8888/something?name=${this.state.username}`
+
     event.preventDefault();
   }
   render() {
