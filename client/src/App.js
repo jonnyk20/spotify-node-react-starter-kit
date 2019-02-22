@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
-import Dashboard from "./Dashboard.js"
+import Dashboard from "./dashboard/Dashboard.js"
 import SignUp from "./SignUp.js"
 import LogIn from "./LogIn.js"
 import Home from "./Home.js"
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-boost";
-import './App.css';
+import './build/App.css';
 import { Router } from "@reach/router"
-
+console.info(Router)
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql"
 });
 
-let discoverId;
-let bankId;
+React.createContext({
+  user: ""
+});
 class App extends Component {
-  constructor(){
-    super();
-  }
   render() {
     return (
       <ApolloProvider client={client}>

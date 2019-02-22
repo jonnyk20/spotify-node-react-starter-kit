@@ -1,0 +1,25 @@
+.App {
+  text-align: center;
+} 
+label, input {
+  margin: 1em;
+}
+.dashboard .container {
+    display:grid;
+    grid-gap: 10px;
+    .tracks {
+      grid-column: 1 / 2;
+      grid-row: 1;
+    }
+    .artists {
+      grid-column: 2/2;
+      grid-row: 1;
+    }
+    ul {
+      list-style: none;
+      img {
+        height: 50px;
+        width: 50px;
+      }
+    }
+}
