@@ -11,10 +11,11 @@ var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+require('dotenv').config()
 
-var client_id = 'YOUR_CLIENT_ID'; // Your client id
-var client_secret = 'YOUR_CLIENT_SECRET'; // Your secret
-var redirect_uri = 'http://localhost:8888/callback'; // Or Your redirect uri
+var client_id = process.env.CLIENT_ID; // Your client id
+var client_secret = process.env.CLIENT_SECRET; // Your secret
+var redirect_uri = `${process.env.SERVER_URL}/callback`; // Or Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
@@ -102,7 +103,7 @@ app.get('/callback', function(req, res) {
         });
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect('http://localhost:3000/#' +
+        res.redirect(`${process.env.CLIENT_URL}/#` +
           querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token
@@ -141,5 +142,7 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-console.log('Listening on 8888');
-app.listen(8888);
+const PORT = process.env.PORT || 8888;
+
+app.listen(PORT);
+console.log(`Listening on ${PORT}`);
