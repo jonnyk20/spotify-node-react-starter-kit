@@ -8,7 +8,7 @@ There are two parts to it, the auth-server, and the client.
 ### 1) Create an App
 - Visit https://developer.spotify.com/ 
 - Log in and create an app
-- Enter http//localhost:8888/callback as the redirect uri
+- Enter http://localhost:8888/callback as the redirect uri
 - Save your changes
 - Copy down the following: Redirect uri, client id, client secret
 
@@ -16,7 +16,7 @@ There are two parts to it, the auth-server, and the client.
 ### 2)  Start Auth Server
 - Navigate to the auth-server directory `cd auth-server`
 - Install the dependencies `npm install`
-- Paste in the redirect uri, client id, and client secret you copied in step 1
+- Navigate to /authorization_code/app.js & paste in the redirect uri, client id, and client secret you copied in step 1
 - Run the Server `node authorization_code/app.js`
 
 ### 3)  Start Client
